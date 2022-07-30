@@ -1,0 +1,56 @@
+# Server
+server:
+    port: 8081
+    compression:
+        enabled: true
+    http2:
+        enabled: true
+
+# Application
+spring:
+    main:
+        allow-bean-definition-overriding: true
+    application:
+        name: job-title-service
+    profiles:
+        active: standalone # standalone will use the application-standalone profile which will create a local DB with H2
+    datasource: ## In case we want use and external Database, change active profile to default and fill the options below
+        url: ## Set Value
+        driver-class-name: ## Set Value
+        username: ## Set value
+        password: ## Set Value
+    jpa:
+        show-sql: true
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        properties:
+            hibernate:
+                jdbc:
+                    time_zone: UTC
+                    batch_size: 50
+                    order_inserts: true
+                format_sql: false
+                temp:
+                    use_jdbc_metadata_defaults: false
+        hibernate:
+            ddl-auto: none
+            use-new-id-generator-mappings: false
+    liquibase:
+        change-log: classpath:/db/liquibase.xml
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+    mandatory-file-encoding: UTF-8
+    banner:
+        location: classpath:banner.txt
+
+# Liquibase
+logging:
+    level:
+        liquibase: INFO
+
+# Swagger
+swagger:
+    info:
+        api:
+            version: 1.0.0
