@@ -3,8 +3,8 @@ package pt.feefo.jobtitleservice.domain.jobtitle;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pt.feefo.jobtitleservice.config.commons.BasicResponseDTO;
@@ -22,9 +22,9 @@ public class JobTitleController {
         this.jobTitleService = jobTitleService;
     }
 
-    @PostMapping(value = "/normalize")
+    @GetMapping(value = "/normalize/{jobDescription}")
     @ApiOperation(value = "Get the normalized version of the user input")
-    public BasicResponseDTO<JobTitleDTO> getNormalisedInput(@RequestBody final String jobDescription) {
+    public BasicResponseDTO<JobTitleDTO> getNormalizedInput(@PathVariable("jobDescription") final String jobDescription) {
         final var jobTitleDTO = this.jobTitleService.findNormalizedJob(jobDescription);
         return BasicResponseDTO.withData(jobTitleDTO);
     }
